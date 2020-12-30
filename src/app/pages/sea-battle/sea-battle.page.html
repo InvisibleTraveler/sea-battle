@@ -1,0 +1,41 @@
+<ng-container *ngIf="battleState$ | async as battleState">
+  <div class="end-game-modal-bg" *ngIf="battleState.status === GameState.ended">
+    <div class="end-game-modal">
+      <p>{{ battleState.winner }} wins!</p>
+      <button (click)="endGame()">Go back</button>
+    </div>
+
+  </div>
+  <app-game-table
+    [disabled]="battleState.status !== GameState.preparing || !!battleState.yourShips.length"
+    [name]="username"
+    [editMode]="battleState.status === GameState.preparing"
+    [shipsMap]="battleState.yourShips.length ? battleState.yourShips : preparingShipsTable"
+    [color]="'green'"
+    (toggleField)="toggleShipsPlacement($event)"
+  ></app-game-table>
+  <app-game-table
+    [disabled]="battleState.turn !== guestId"
+    [name]="battleState.opponentName"
+    [editMode]="false"
+    [shipsMap]="battleState.opponentShips.length ? battleState.opponentShips : defaultShipsTable"
+    [color]="'red'"
+    (toggleField)="shoot($event)"
+  ></app-game-table>
+  <div class="notify-text" [ngSwitch]="battleState.status">
+    <div *ngSwitchCase="GameState.preparing">
+      <p class="default" *ngIf="battleState.yourShips.length; else preparing">Waiting your opponent</p>
+      <ng-template #preparing>
+          <p class="default" *ngIf="leftPlaceShips > 0">Place your ships! Left: {{ leftPlaceShips }}</p>
+          <button *ngIf="!leftPlaceShips" (click)="ready()">Ready</button>
+          <p class="error" *ngIf="leftPlaceShips < 0">Too many ships! remove: {{ -1 * leftPlaceShips }}</p>
+      </ng-template>
+    </div>
+    <div *ngSwitchCase="GameState.playing">
+      <p class="success" *ngIf="battleState.turn === guestId; else opponentTurn">Your turn</p>
+      <ng-template #opponentTurn>
+        <p class="default">Opponent turn</p>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>

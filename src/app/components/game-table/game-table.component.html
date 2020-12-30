@@ -1,0 +1,16 @@
+<section>
+  <p class="name" [style.color]="color">{{ name }}'s ships:</p>
+  <div class="table">
+    <div class="row" *ngFor="let row of shipsMap; let y = index">
+      <div
+        class="cell"
+        *ngFor="let field of row; let x = index"
+        [class.disabled]="disabled || !canClick(y, x)"
+        (click)="(!disabled && canClick(y, x)) ? onClick(y, x) : null"
+      >
+        <div class="ship" *ngIf="field.haveShip"></div>
+        <div class="hit" *ngIf="field.hit">&times;</div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,60 @@
+section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px 40px;
+}
+
+section .name {
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.table .row {
+  display: flex;
+  flex-direction: row;
+}
+
+.table .row .cell {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+}
+
+.table .row .cell.disabled {
+  cursor: default;
+}
+
+.table .row .cell:not(.disabled):hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.ship {
+  position: absolute;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  background-color: cadetblue;
+}
+
+.hit {
+  position: absolute;
+  z-index: 2;
+  font-size: 30px;
+  line-height: 30px;
+  color: crimson;
+}

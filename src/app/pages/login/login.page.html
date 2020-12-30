@@ -1,0 +1,11 @@
+<div class="loader" *ngIf="loading">
+  <img src="assets/loader.png" alt="loader" />
+  <p>Searching game...</p>
+</div>
+<div class="login-form">
+  <label>
+    <span>Enter your name, Guest!</span>
+    <input [formControl]="nameControl" />
+  </label>
+  <button [disabled]="nameControl.invalid" (click)="searchGame()">Find game</button>
+</div>
